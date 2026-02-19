@@ -24,6 +24,7 @@ def to_rows: to_entries | .[] | squish;
 		id,
 		definition,
 		capital,
+		market,
 	}],
 	country_rankings : [.country_rankings.country_rankings[] | {
 		country,
@@ -31,6 +32,10 @@ def to_rows: to_entries | .[] | squish;
 		target,
 		score,
 		prestige,
+	}],
+	markets : [.market_manager.database | to_rows | {
+		id,
+		owner,
 	}],
 	states : [.states.database | to_rows | {
 		id,
@@ -45,6 +50,9 @@ def to_rows: to_entries | .[] | squish;
 			building,
 			state,
 			staffing,
+			dividends,
+			gross: (.goods_sales // 0)  - (.goods_cost // 0),
+			investment: (.profit_after_reserves // 0) - (.profit_after_investments // 0),
 		}],
 	building_ownership : [.building_ownership_manager.database | to_rows | 
 		select(.levels > 0) | {
