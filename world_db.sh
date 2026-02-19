@@ -7,10 +7,10 @@
 set -e
 
 if [ $# -lt 2 ]; then
-    echo "Usage: $0 <input.v3> <output_dir>" >&2
-    echo "  input.v3: Vic3 save file" >&2
-    echo "  output_dir: Output directory for CSV files" >&2
-    exit 1
+	echo "Usage: $0 <input.v3> <output_dir>" >&2
+	echo "  input.v3: Vic3 save file" >&2
+	echo "  output_dir: Output directory for CSV files" >&2
+	exit 1
 fi
 
 INPUT_SAVE="$1"
@@ -19,15 +19,15 @@ SCRIPT_DIR="$(dirname "$0")"
 QUERIES_DIR="$SCRIPT_DIR/queries"
 
 if [ ! -f "$INPUT_SAVE" ]; then
-    echo "Error: Input file '$INPUT_SAVE' not found" >&2
-    exit 1
+	echo "Error: Input file '$INPUT_SAVE' not found" >&2
+	exit 1
 fi
 
 for cmd in rakaly jq duckdb; do
-    if ! command -v $cmd &> /dev/null; then
-        echo "Error: $cmd is not installed" >&2
-        exit 1
-    fi
+	if ! command -v $cmd &> /dev/null; then
+		echo "Error: $cmd is not installed" >&2
+		exit 1
+	fi
 done
 
 rm -rf "$OUTPUT_DIR"
@@ -51,23 +51,23 @@ TEMP_WINDIR="$(cygpath -m "$TEMP_DIR")"
 OUTPUT_WINDIR="$(cygpath -m "$OUTPUT_DIR")"
 
 for TABLE in $(jq -c -r 'keys_unsorted[]' "$MUNGED_JSON"); do
-		# Remove the carriage returns that jq sneaks in on Windows
-    TABLE="${TABLE//$'\r'/}"
-		# Tables need to come from disjoint files, so split the munged JSON into one file per table array
-		TABLE_LEAF="$TABLE.json"
-    jq -c ".${TABLE}" "$MUNGED_JSON" > "$TEMP_DIR/$TABLE_LEAF"
+	# Remove the carriage returns that jq sneaks in on Windows
+	TABLE="${TABLE//$'\r'/}"
+	# Tables need to come from disjoint files, so split the munged JSON into one file per table array
+	TABLE_LEAF="$TABLE.json"
+	jq -c ".${TABLE}" "$MUNGED_JSON" > "$TEMP_DIR/$TABLE_LEAF"
 
-    SQL+="create table \"$TABLE\" as select * from read_json('${TEMP_WINDIR}/${TABLE_LEAF}');"$'\n'
-    SQL+="copy \"$TABLE\" to '${OUTPUT_WINDIR}/${TABLE}.csv' (header, delimiter ',');"$'\n'
-    SQL+="select '  ✓ Processed ' || count(*) || ' $TABLE' from \"$TABLE\";"$'\n'
+	SQL+="create table \"$TABLE\" as select * from read_json('${TEMP_WINDIR}/${TABLE_LEAF}');"$'\n'
+	SQL+="copy \"$TABLE\" to '${OUTPUT_WINDIR}/${TABLE}.csv' (header, delimiter ',');"$'\n'
+	SQL+="select '  ✓ Processed ' || count(*) || ' $TABLE' from \"$TABLE\";"$'\n'
 done
 
 # Run each query in queries/ and export its result
 for QUERY_FILE in "$QUERIES_DIR"/*.sql; do
-		QUERY_NAME=$(basename "$QUERY_FILE" .sql)
-		QUERY=$(cat "$QUERY_FILE")
-		SQL+="copy (${QUERY}) to '${OUTPUT_WINDIR}/${QUERY_NAME}.csv' (header, delimiter ',');"$'\n'
-		SQL+="select '  ✓ Derived $QUERY_NAME';"$'\n'
+	QUERY_NAME=$(basename "$QUERY_FILE" .sql)
+	QUERY=$(cat "$QUERY_FILE")
+	SQL+="copy (${QUERY}) to '${OUTPUT_WINDIR}/${QUERY_NAME}.csv' (header, delimiter ',');"$'\n'
+	SQL+="select '  ✓ Derived $QUERY_NAME';"$'\n'
 done
 
 mkdir -p "$OUTPUT_DIR"
