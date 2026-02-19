@@ -1,0 +1,7 @@
+expression Root = "C:\Users\patri\vic3-data\earth" meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
+	lineageTag: 92df5ea0-bb56-4493-a017-bd23801dda95
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

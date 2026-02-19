@@ -1,0 +1,101 @@
+table buildings
+	lineageTag: b56ef7ac-0fa6-4c07-b489-81d1d37cf1ec
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: e211a26a-d2f1-4abc-a554-75437fd127ae
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column building
+		dataType: string
+		lineageTag: ff85bd45-f0d1-4a51-9c3e-fcba12fc86ce
+		summarizeBy: none
+		sourceColumn: building
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: int64
+		formatString: 0
+		lineageTag: e0b6dbeb-a16e-4f4c-ae41-84a30ce2f194
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column levels
+		dataType: int64
+		formatString: 0
+		lineageTag: fd135ebf-d1fa-4ea7-b214-6f0b8eeaff55
+		summarizeBy: sum
+		sourceColumn: levels
+
+		annotation SummarizationSetBy = Automatic
+
+	column staffing
+		dataType: double
+		lineageTag: 1f82ba94-6ef8-4d16-8098-a66755f43ce1
+		summarizeBy: sum
+		sourceColumn: staffing
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dividends
+		dataType: double
+		lineageTag: f7c0de38-f722-484f-97b3-da284eb3f269
+		summarizeBy: sum
+		sourceColumn: dividends
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gross
+		dataType: double
+		lineageTag: 3144dfaa-6b0b-4288-9dab-30102a2f176a
+		summarizeBy: sum
+		sourceColumn: gross
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column investment
+		dataType: double
+		lineageTag: bd21b45c-bf6c-4f64-bbe2-2c7539e48b50
+		summarizeBy: sum
+		sourceColumn: investment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column building_simplified
+		dataType: string
+		lineageTag: 581f5423-8490-46c0-a597-b9268334ecce
+		summarizeBy: none
+		sourceColumn: building_simplified
+
+		annotation SummarizationSetBy = Automatic
+
+	partition buildings = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(Root & "\buildings.csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"id", Int64.Type}, {"building", type text}, {"state", Int64.Type}, {"levels", Int64.Type}, {"staffing", type number}, {"dividends", type number}, {"gross", type number}, {"investment", type number}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "building_simplified", each if Text.Contains([building], "company") then "building_company" else [building])
+				in
+				    #"Added Custom"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

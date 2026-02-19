@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "fa9769b321f9b214c4ac",
+  "position": {
+    "x": 852.03647416413378,
+    "y": 470.75987841945289,
+    "z": 2000,
+    "height": 248.99696048632219,
+    "width": 427.96352583586628,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "building_ownership"
+                    }
+                  },
+                  "Property": "cost"
+                }
+              },
+              "queryRef": "building_ownership.cost",
+              "nativeQueryRef": "cost",
+              "format": "0.00"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "building_ownership"
+                  }
+                },
+                "Property": "cost"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

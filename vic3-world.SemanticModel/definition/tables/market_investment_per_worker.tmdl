@@ -1,0 +1,36 @@
+table market_investment_per_worker
+	lineageTag: 6843af36-e892-4c91-936a-03bd26618d4a
+
+	column market
+		dataType: int64
+		formatString: 0
+		lineageTag: ae08d387-03b7-444e-8e73-8d9eb6c5c051
+		summarizeBy: none
+		sourceColumn: market
+
+		annotation SummarizationSetBy = Automatic
+
+	column investment_per_worker
+		dataType: double
+		lineageTag: 5dcd9456-89a8-4d0e-b28f-157ac3727cf9
+		summarizeBy: sum
+		sourceColumn: investment_per_worker
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition market_investment_per_worker = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(Root & "\market_investment_per_worker.csv"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"market", Int64.Type}, {"investment_per_worker", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

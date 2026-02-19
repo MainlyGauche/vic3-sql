@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "b390093faf17e54eab78",
+  "position": {
+    "x": 384.19452887537994,
+    "y": 0,
+    "z": 2000,
+    "height": 87.537993920972653,
+    "width": 201.33738601823708,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "buildings"
+                        }
+                      },
+                      "Property": "investment"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(buildings.investment)",
+              "nativeQueryRef": "Sum of investment"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "buildings"
+                      }
+                    },
+                    "Property": "investment"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

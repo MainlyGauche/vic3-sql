@@ -1,0 +1,35 @@
+table state_saturation
+	lineageTag: 4d3af6c3-63a6-4158-9d87-13061b3ccd70
+
+	column saturation
+		dataType: int64
+		formatString: 0
+		lineageTag: 321cfde1-e8cc-4bda-ab96-3ffb3e8f9658
+		summarizeBy: none
+		sourceColumn: saturation
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: int64
+		formatString: 0
+		lineageTag: 52fd2a98-03aa-4611-9017-4cf29c2c69b3
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	partition state_saturation = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(Root & "\state_saturation.csv"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"state", Int64.Type}, {"saturation", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

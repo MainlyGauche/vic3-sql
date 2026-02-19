@@ -1,0 +1,34 @@
+table technologies
+	lineageTag: 6a27e977-1517-495c-a932-c08c1bc6dcec
+
+	column country
+		dataType: int64
+		formatString: 0
+		lineageTag: 97a7380b-588b-4d10-94ab-a36123201d2e
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column technology
+		dataType: string
+		lineageTag: 800e82e6-d442-4b22-98bd-dc3b2b085d48
+		summarizeBy: distinctCount
+		sourceColumn: technology
+
+		annotation SummarizationSetBy = User
+
+	partition technologies = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(Root & "\technologies.csv"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"country", Int64.Type}, {"technology", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

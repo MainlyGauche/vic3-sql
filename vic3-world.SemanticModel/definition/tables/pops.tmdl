@@ -1,0 +1,145 @@
+table pops
+	lineageTag: e7c4c740-493b-4a70-bba3-dfe55737ace4
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2da67a9c-6cda-4a8e-b008-b02c96aac723
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column type
+		dataType: string
+		lineageTag: 24cb4695-8e01-4346-8ae9-d1da0f7aef34
+		summarizeBy: none
+		sourceColumn: type
+
+		annotation SummarizationSetBy = Automatic
+
+	column workforce
+		dataType: int64
+		formatString: 0
+		lineageTag: c3c987d6-2d16-487a-b63c-c45342287939
+		summarizeBy: sum
+		sourceColumn: workforce
+
+		annotation SummarizationSetBy = Automatic
+
+	column dependents
+		dataType: int64
+		formatString: 0
+		lineageTag: 2153a976-9b48-46e2-83a9-956f6fa60d04
+		summarizeBy: sum
+		sourceColumn: dependents
+
+		annotation SummarizationSetBy = Automatic
+
+	column location
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f79ed1a-6e5d-45bd-88b5-7369b618272e
+		summarizeBy: sum
+		sourceColumn: location
+
+		annotation SummarizationSetBy = Automatic
+
+	column culture
+		dataType: int64
+		formatString: 0
+		lineageTag: 4830a006-0f92-4926-b87f-60721ad151f8
+		summarizeBy: sum
+		sourceColumn: culture
+
+		annotation SummarizationSetBy = Automatic
+
+	column workplace
+		dataType: int64
+		formatString: 0
+		lineageTag: ed2b7c3f-a42f-4e7a-8c7b-fd7ee9a2f87e
+		summarizeBy: none
+		sourceColumn: workplace
+
+		annotation SummarizationSetBy = Automatic
+
+	column religion
+		dataType: string
+		lineageTag: 4ff4f5b6-7813-469c-b437-d1125775bb05
+		summarizeBy: none
+		sourceColumn: religion
+
+		annotation SummarizationSetBy = Automatic
+
+	column num_literate
+		dataType: int64
+		formatString: 0
+		lineageTag: ac525eb0-a4a3-4e29-b35d-282f6bdd8318
+		summarizeBy: sum
+		sourceColumn: num_literate
+
+		annotation SummarizationSetBy = Automatic
+
+	column wealth
+		dataType: int64
+		formatString: 0
+		lineageTag: 67f6c82f-35f9-42af-a02e-64de852cf7ac
+		summarizeBy: sum
+		sourceColumn: wealth
+
+		annotation SummarizationSetBy = Automatic
+
+	column social_class
+		dataType: string
+		lineageTag: 5cac8b11-3de9-446e-b368-7d419424a542
+		summarizeBy: none
+		sourceColumn: social_class
+
+		annotation SummarizationSetBy = Automatic
+
+	column food_security
+		dataType: double
+		lineageTag: fabcb51a-c70a-416f-adfe-afe909bfde40
+		summarizeBy: sum
+		sourceColumn: food_security
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column starvation
+		dataType: double
+		lineageTag: 1eb34d46-5c70-4c6e-a999-75e0f326b6cf
+		summarizeBy: sum
+		sourceColumn: starvation
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column literacy = floor(pops[num_literate] * 100.0 / (pops[dependents] + pops[workforce]), 1)
+		dataType: double
+		formatString: 0
+		lineageTag: 99cae531-5dcb-480f-825d-62987032cb4a
+		summarizeBy: sum
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	partition pops = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(Root & "\pops.csv"),[Delimiter=",", Columns=13, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"id", Int64.Type}, {"type", type text}, {"workforce", Int64.Type}, {"dependents", Int64.Type}, {"location", Int64.Type}, {"culture", Int64.Type}, {"workplace", Int64.Type}, {"religion", type text}, {"num_literate", Int64.Type}, {"wealth", Int64.Type}, {"social_class", type text}, {"food_security", type number}, {"starvation", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,220 @@
+{
+  "version": "1.0",
+  "conceptualSchemaSettings": {},
+  "queries": [
+    {
+      "name": "Root",
+      "lineageTag": "92df5ea0-bb56-4493-a017-bd23801dda95",
+      "navigationStepName": "Navigation",
+      "text": [
+        "\"USERPROFILE\\vic3-data\" meta [IsParameterQuery=true, Type=\"Any\", IsParameterQueryRequired=true]"
+      ],
+      "loadAsTableDisabled": true,
+      "resultType": "Text",
+      "isHidden": false
+    },
+    {
+      "name": "state_saturation",
+      "lineageTag": "4d3af6c3-63a6-4158-9d87-13061b3ccd70",
+      "navigationStepName": "Navigation",
+      "text": [
+        "let",
+        "    Source = Csv.Document(File.Contents(Root & \"\\state_saturation.csv\"),[Delimiter=\",\", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
+        "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+        "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"state\", Int64.Type}, {\"saturation\", Int64.Type}})",
+        "in",
+        "    #\"Changed Type\""
+      ],
+      "isDirectQuery": false,
+      "lastLoadedAsTableFormulaText": "{\"IncludesReferencedQueries\":false,\"RootFormulaText\":\"let\\n    Source = Csv.Document(File.Contents(Root & \\\"\\\\state_saturation.csv\\\"),[Delimiter=\\\",\\\", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),\\n    #\\\"Promoted Headers\\\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\\n    #\\\"Changed Type\\\" = Table.TransformColumnTypes(#\\\"Promoted Headers\\\",{{\\\"state\\\", Int64.Type}, {\\\"saturation\\\", Int64.Type}})\\nin\\n    #\\\"Changed Type\\\"\",\"ReferencedQueriesFormulaText\":{}}",
+      "loadAsTableDisabled": false,
+      "resultType": "Table",
+      "isHidden": false
+    },
+    {
+      "name": "states",
+      "lineageTag": "3d68b751-2b6c-48d1-8eb1-104060697561",
+      "navigationStepName": "Navigation",
+      "text": [
+        "let",
+        "    Source = Csv.Document(File.Contents(Root & \"\\states.csv\"),[Delimiter=\",\", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
+        "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+        "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"id\", Int64.Type}, {\"country\", Int64.Type}, {\"region\", type text}, {\"arable_land\", Int64.Type}, {\"incorporated\", type logical}})",
+        "in",
+        "    #\"Changed Type\""
+      ],
+      "isDirectQuery": false,
+      "lastLoadedAsTableFormulaText": "{\"IncludesReferencedQueries\":false,\"RootFormulaText\":\"let\\n    Source = Csv.Document(File.Contents(Root & \\\"\\\\states.csv\\\"),[Delimiter=\\\",\\\", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),\\n    #\\\"Promoted Headers\\\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\\n    #\\\"Changed Type\\\" = Table.TransformColumnTypes(#\\\"Promoted Headers\\\",{{\\\"id\\\", Int64.Type}, {\\\"country\\\", Int64.Type}, {\\\"region\\\", type text}, {\\\"arable_land\\\", Int64.Type}, {\\\"incorporated\\\", type logical}})\\nin\\n    #\\\"Changed Type\\\"\",\"ReferencedQueriesFormulaText\":{}}",
+      "loadAsTableDisabled": false,
+      "resultType": "Table",
+      "isHidden": false
+    },
+    {
+      "name": "countries",
+      "lineageTag": "7c9549d5-23dc-455c-abe6-26feb21f6d1e",
+      "navigationStepName": "Navigation",
+      "text": [
+        "let",
+        "    Source = Csv.Document(File.Contents(Root & \"\\countries.csv\"),[Delimiter=\",\", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
+        "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+        "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"id\", Int64.Type}, {\"definition\", type text}, {\"capital\", Int64.Type}, {\"market\", Int64.Type}})",
+        "in",
+        "    #\"Changed Type\""
+      ],
+      "isDirectQuery": false,
+      "lastLoadedAsTableFormulaText": "{\"IncludesReferencedQueries\":false,\"RootFormulaText\":\"let\\n    Source = Csv.Document(File.Contents(Root & \\\"\\\\countries.csv\\\"),[Delimiter=\\\",\\\", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),\\n    #\\\"Promoted Headers\\\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\\n    #\\\"Changed Type\\\" = Table.TransformColumnTypes(#\\\"Promoted Headers\\\",{{\\\"id\\\", Int64.Type}, {\\\"definition\\\", type text}, {\\\"capital\\\", Int64.Type}, {\\\"market\\\", Int64.Type}})\\nin\\n    #\\\"Changed Type\\\"\",\"ReferencedQueriesFormulaText\":{}}",
+      "loadAsTableDisabled": false,
+      "resultType": "Table",
+      "isHidden": false
+    },
+    {
+      "name": "country_rankings",
+      "lineageTag": "0a0fafc8-99c3-4cca-9ce2-22fc8c2ff884",
+      "navigationStepName": "Navigation",
+      "text": [
+        "let",
+        "    Source = Csv.Document(File.Contents(Root & \"\\country_rankings.csv\"),[Delimiter=\",\", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
+        "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+        "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"country\", Int64.Type}, {\"rank\", type text}, {\"target\", type text}, {\"score\", Int64.Type}, {\"prestige\", Int64.Type}})",
+        "in",
+        "    #\"Changed Type\""
+      ],
+      "isDirectQuery": false,
+      "lastLoadedAsTableFormulaText": "{\"IncludesReferencedQueries\":false,\"RootFormulaText\":\"let\\n    Source = Csv.Document(File.Contents(Root & \\\"\\\\country_rankings.csv\\\"),[Delimiter=\\\",\\\", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),\\n    #\\\"Promoted Headers\\\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\\n    #\\\"Changed Type\\\" = Table.TransformColumnTypes(#\\\"Promoted Headers\\\",{{\\\"country\\\", Int64.Type}, {\\\"rank\\\", type text}, {\\\"target\\\", type text}, {\\\"score\\\", Int64.Type}, {\\\"prestige\\\", Int64.Type}})\\nin\\n    #\\\"Changed Type\\\"\",\"ReferencedQueriesFormulaText\":{}}",
+      "loadAsTableDisabled": false,
+      "resultType": "Table",
+      "isHidden": false
+    },
+    {
+      "name": "pops",
+      "lineageTag": "e7c4c740-493b-4a70-bba3-dfe55737ace4",
+      "navigationStepName": "Navigation",
+      "text": [
+        "let",
+        "    Source = Csv.Document(File.Contents(Root & \"\\pops.csv\"),[Delimiter=\",\", Columns=13, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
+        "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+        "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"id\", Int64.Type}, {\"type\", type text}, {\"workforce\", Int64.Type}, {\"dependents\", Int64.Type}, {\"location\", Int64.Type}, {\"culture\", Int64.Type}, {\"workplace\", Int64.Type}, {\"religion\", type text}, {\"num_literate\", Int64.Type}, {\"wealth\", Int64.Type}, {\"social_class\", type text}, {\"food_security\", type number}, {\"starvation\", type number}})",
+        "in",
+        "    #\"Changed Type\""
+      ],
+      "isDirectQuery": false,
+      "lastLoadedAsTableFormulaText": "{\"IncludesReferencedQueries\":false,\"RootFormulaText\":\"let\\n    Source = Csv.Document(File.Contents(Root & \\\"\\\\pops.csv\\\"),[Delimiter=\\\",\\\", Columns=13, Encoding=1252, QuoteStyle=QuoteStyle.None]),\\n    #\\\"Promoted Headers\\\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\\n    #\\\"Changed Type\\\" = Table.TransformColumnTypes(#\\\"Promoted Headers\\\",{{\\\"id\\\", Int64.Type}, {\\\"type\\\", type text}, {\\\"workforce\\\", Int64.Type}, {\\\"dependents\\\", Int64.Type}, {\\\"location\\\", Int64.Type}, {\\\"culture\\\", Int64.Type}, {\\\"workplace\\\", Int64.Type}, {\\\"religion\\\", type text}, {\\\"num_literate\\\", Int64.Type}, {\\\"wealth\\\", Int64.Type}, {\\\"social_class\\\", type text}, {\\\"food_security\\\", type number}, {\\\"starvation\\\", type number}})\\nin\\n    #\\\"Changed Type\\\"\",\"ReferencedQueriesFormulaText\":{}}",
+      "loadAsTableDisabled": false,
+      "resultType": "Table",
+      "isHidden": false
+    },
+    {
+      "name": "markets",
+      "lineageTag": "08b2da15-2871-4895-a9e4-afd1340d61cb",
+      "navigationStepName": "Navigation",
+      "text": [
+        "let",
+        "    Source = Csv.Document(File.Contents(Root & \"\\markets.csv\"),[Delimiter=\",\", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
+        "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+        "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"id\", Int64.Type}, {\"owner\", Int64.Type}})",
+        "in",
+        "    #\"Changed Type\""
+      ],
+      "isDirectQuery": false,
+      "lastLoadedAsTableFormulaText": "{\"IncludesReferencedQueries\":false,\"RootFormulaText\":\"let\\n    Source = Csv.Document(File.Contents(Root & \\\"\\\\markets.csv\\\"),[Delimiter=\\\",\\\", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),\\n    #\\\"Promoted Headers\\\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\\n    #\\\"Changed Type\\\" = Table.TransformColumnTypes(#\\\"Promoted Headers\\\",{{\\\"id\\\", Int64.Type}, {\\\"owner\\\", Int64.Type}})\\nin\\n    #\\\"Changed Type\\\"\",\"ReferencedQueriesFormulaText\":{}}",
+      "loadAsTableDisabled": false,
+      "resultType": "Table",
+      "isHidden": false
+    },
+    {
+      "name": "market_investment_per_worker",
+      "lineageTag": "6843af36-e892-4c91-936a-03bd26618d4a",
+      "navigationStepName": "Navigation",
+      "text": [
+        "let",
+        "    Source = Csv.Document(File.Contents(Root & \"\\market_investment_per_worker.csv\"),[Delimiter=\",\", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
+        "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+        "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"market\", Int64.Type}, {\"investment_per_worker\", type number}})",
+        "in",
+        "    #\"Changed Type\""
+      ],
+      "isDirectQuery": false,
+      "lastLoadedAsTableFormulaText": "{\"IncludesReferencedQueries\":false,\"RootFormulaText\":\"let\\n    Source = Csv.Document(File.Contents(Root & \\\"\\\\market_investment_per_worker.csv\\\"),[Delimiter=\\\",\\\", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),\\n    #\\\"Promoted Headers\\\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\\n    #\\\"Changed Type\\\" = Table.TransformColumnTypes(#\\\"Promoted Headers\\\",{{\\\"market\\\", Int64.Type}, {\\\"investment_per_worker\\\", type number}})\\nin\\n    #\\\"Changed Type\\\"\",\"ReferencedQueriesFormulaText\":{}}",
+      "loadAsTableDisabled": false,
+      "resultType": "Table",
+      "isHidden": false
+    },
+    {
+      "name": "buildings",
+      "lineageTag": "b56ef7ac-0fa6-4c07-b489-81d1d37cf1ec",
+      "navigationStepName": "Navigation",
+      "text": [
+        "let",
+        "    Source = Csv.Document(File.Contents(Root & \"\\buildings.csv\"),[Delimiter=\",\", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
+        "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+        "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"id\", Int64.Type}, {\"building\", type text}, {\"state\", Int64.Type}, {\"levels\", Int64.Type}, {\"staffing\", type number}, {\"dividends\", type number}, {\"gross\", type number}, {\"investment\", type number}}),",
+        "    #\"Added Custom\" = Table.AddColumn(#\"Changed Type\", \"building_simplified\", each if Text.Contains([building], \"company\") then \"building_company\" else [building])",
+        "in",
+        "    #\"Added Custom\""
+      ],
+      "isDirectQuery": false,
+      "lastLoadedAsTableFormulaText": "{\"IncludesReferencedQueries\":false,\"RootFormulaText\":\"let\\n    Source = Csv.Document(File.Contents(Root & \\\"\\\\buildings.csv\\\"),[Delimiter=\\\",\\\", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),\\n    #\\\"Promoted Headers\\\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\\n    #\\\"Changed Type\\\" = Table.TransformColumnTypes(#\\\"Promoted Headers\\\",{{\\\"id\\\", Int64.Type}, {\\\"building\\\", type text}, {\\\"state\\\", Int64.Type}, {\\\"levels\\\", Int64.Type}, {\\\"staffing\\\", type number}, {\\\"dividends\\\", type number}, {\\\"gross\\\", type number}, {\\\"investment\\\", type number}}),\\n    #\\\"Added Custom\\\" = Table.AddColumn(#\\\"Changed Type\\\", \\\"building_simplified\\\", each if Text.Contains([building], \\\"company\\\") then \\\"building_company\\\" else [building])\\nin\\n    #\\\"Added Custom\\\"\",\"ReferencedQueriesFormulaText\":{}}",
+      "loadAsTableDisabled": false,
+      "resultType": "Table",
+      "isHidden": false
+    },
+    {
+      "name": "building_ownership",
+      "lineageTag": "f59266ac-a9ee-4da9-8296-e74094033841",
+      "navigationStepName": "Navigation",
+      "text": [
+        "let",
+        "    Source = Csv.Document(File.Contents(Root & \"\\building_ownership.csv\"),[Delimiter=\",\", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
+        "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+        "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"levels\", Int64.Type}, {\"owned_building\", Int64.Type}, {\"owning_country\", Int64.Type}, {\"owning_building\", Int64.Type}}),",
+        "    #\"Added Custom\" = Table.AddColumn(#\"Changed Type\", \"ownership_type\", each if not ([owning_country] = null)",
+        " then \"public\" else if [owned_building] = [owning_building] then \"workforce\" else \"private\")",
+        "in",
+        "    #\"Added Custom\""
+      ],
+      "isDirectQuery": false,
+      "lastLoadedAsTableFormulaText": "{\"IncludesReferencedQueries\":false,\"RootFormulaText\":\"let\\n    Source = Csv.Document(File.Contents(Root & \\\"\\\\building_ownership.csv\\\"),[Delimiter=\\\",\\\", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),\\n    #\\\"Promoted Headers\\\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\\n    #\\\"Changed Type\\\" = Table.TransformColumnTypes(#\\\"Promoted Headers\\\",{{\\\"levels\\\", Int64.Type}, {\\\"owned_building\\\", Int64.Type}, {\\\"owning_country\\\", Int64.Type}, {\\\"owning_building\\\", Int64.Type}}),\\n    #\\\"Added Custom\\\" = Table.AddColumn(#\\\"Changed Type\\\", \\\"ownership_type\\\", each if not ([owning_country] = null)\\n then \\\"public\\\" else if [owned_building] = [owning_building] then \\\"workforce\\\" else \\\"private\\\")\\nin\\n    #\\\"Added Custom\\\"\",\"ReferencedQueriesFormulaText\":{}}",
+      "loadAsTableDisabled": false,
+      "resultType": "Table",
+      "isHidden": false
+    },
+    {
+      "name": "building_costs",
+      "lineageTag": "5bc8f493-1a82-432f-a18d-28a86e41419e",
+      "navigationStepName": "Navigation",
+      "text": [
+        "let",
+        "    Source = Csv.Document(File.Contents(Root & \"\\building_costs.csv\"),[Delimiter=\",\", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
+        "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+        "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"building\", type text}, {\"cost\", Int64.Type}})",
+        "in",
+        "    #\"Changed Type\""
+      ],
+      "isDirectQuery": false,
+      "lastLoadedAsTableFormulaText": "{\"IncludesReferencedQueries\":false,\"RootFormulaText\":\"let\\n    Source = Csv.Document(File.Contents(Root & \\\"\\\\building_costs.csv\\\"),[Delimiter=\\\",\\\", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),\\n    #\\\"Promoted Headers\\\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\\n    #\\\"Changed Type\\\" = Table.TransformColumnTypes(#\\\"Promoted Headers\\\",{{\\\"building\\\", type text}, {\\\"cost\\\", Int64.Type}})\\nin\\n    #\\\"Changed Type\\\"\",\"ReferencedQueriesFormulaText\":{}}",
+      "loadAsTableDisabled": false,
+      "resultType": "Table",
+      "isHidden": false
+    },
+    {
+      "name": "technologies",
+      "lineageTag": "6a27e977-1517-495c-a932-c08c1bc6dcec",
+      "navigationStepName": "Navigation",
+      "text": [
+        "let",
+        "    Source = Csv.Document(File.Contents(Root & \"\\technologies.csv\"),[Delimiter=\",\", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
+        "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+        "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"country\", Int64.Type}, {\"technology\", type text}})",
+        "in",
+        "    #\"Changed Type\""
+      ],
+      "isDirectQuery": false,
+      "lastLoadedAsTableFormulaText": "{\"IncludesReferencedQueries\":false,\"RootFormulaText\":\"let\\n    Source = Csv.Document(File.Contents(Root & \\\"\\\\technologies.csv\\\"),[Delimiter=\\\",\\\", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),\\n    #\\\"Promoted Headers\\\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\\n    #\\\"Changed Type\\\" = Table.TransformColumnTypes(#\\\"Promoted Headers\\\",{{\\\"country\\\", Int64.Type}, {\\\"technology\\\", type text}})\\nin\\n    #\\\"Changed Type\\\"\",\"ReferencedQueriesFormulaText\":{}}",
+      "loadAsTableDisabled": false,
+      "resultType": "Table",
+      "isHidden": false
+    }
+  ],
+  "queryGroups": [],
+  "culture": "en-US"
+}

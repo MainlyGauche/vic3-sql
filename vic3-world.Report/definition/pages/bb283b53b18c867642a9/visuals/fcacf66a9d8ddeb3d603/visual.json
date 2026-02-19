@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "fcacf66a9d8ddeb3d603",
+  "position": {
+    "x": 648.75379939209733,
+    "y": 0,
+    "z": 1000,
+    "height": 461.03343465045594,
+    "width": 631.24620060790278,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "building_ownership"
+                    }
+                  },
+                  "Property": "ownership_type"
+                }
+              },
+              "queryRef": "building_ownership.ownership_type",
+              "nativeQueryRef": "ownership_type",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "building_ownership"
+                    }
+                  },
+                  "Property": "cost"
+                }
+              },
+              "queryRef": "building_ownership.cost",
+              "nativeQueryRef": "cost"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "building_ownership"
+                  }
+                },
+                "Property": "cost"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

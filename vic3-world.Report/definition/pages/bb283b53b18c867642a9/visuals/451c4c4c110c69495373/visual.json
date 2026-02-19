@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "451c4c4c110c69495373",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "height": 461.03343465045594,
+    "width": 633.19148936170211,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "building_ownership"
+                    }
+                  },
+                  "Property": "ownership_type"
+                }
+              },
+              "queryRef": "building_ownership.ownership_type",
+              "nativeQueryRef": "ownership_type",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "building_ownership"
+                    }
+                  },
+                  "Property": "gross"
+                }
+              },
+              "queryRef": "building_ownership.gross",
+              "nativeQueryRef": "gross"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "building_ownership"
+                  }
+                },
+                "Property": "gross"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

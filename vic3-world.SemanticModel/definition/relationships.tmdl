@@ -1,0 +1,81 @@
+relationship AutoDetected_c9e660b4-692b-4eac-99f6-e456ebbae483
+	isActive: false
+	fromColumn: states.country
+	toColumn: country_rankings.country
+
+relationship 84ba31b7-fc36-8530-a34f-c7a9b830c72d
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: countries.id
+	toColumn: country_rankings.country
+
+relationship 85b2b107-d779-d5b4-90c0-b8976daaac71
+	fromColumn: states.country
+	toColumn: countries.id
+
+relationship 98fd32b2-09d6-af84-0753-333ddcd16105
+	isActive: false
+	fromColumn: pops.location
+	toColumn: states.id
+
+relationship f830aece-2fac-9ec8-ebc3-c1dd54ea9e6b
+	fromColumn: countries.market
+	toColumn: markets.id
+
+relationship e6cd8bb9-ff7c-bc87-4f57-01cd5693c91e
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: markets.owner
+	toColumn: countries.id
+
+relationship aaf10f06-001a-f871-fab5-55dec7f86dda
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: market_investment_per_worker.market
+	toColumn: markets.id
+
+relationship 7dbabe1c-7ebe-3abd-3d1f-a14b3ccc6028
+	isActive: false
+	fromColumn: countries.market
+	toColumn: market_investment_per_worker.market
+
+relationship AutoDetected_2d725c91-6ac9-41e1-8434-66d48b6fc430
+	fromColumn: buildings.state
+	toColumn: states.id
+
+relationship 4147ef03-c70c-c392-e2a8-01ae55f76085
+	fromColumn: pops.workplace
+	toColumn: buildings.id
+
+relationship 4d9b319e-7e73-3f70-1a16-87e850edb0fd
+	isActive: false
+	fromColumn: building_ownership.owning_country
+	toColumn: countries.id
+
+relationship 349107f1-4f94-0d4d-4dc3-651c9794f632
+	isActive: false
+	fromColumn: building_ownership.owning_building
+	toColumn: buildings.id
+
+relationship c080eaac-122c-1ce7-9766-b28f62176b68
+	fromColumn: building_ownership.owned_building
+	toColumn: buildings.id
+
+relationship e6cc93fe-3cc4-71ec-5ecd-9776ac2d929e
+	fromColumn: buildings.building
+	toColumn: building_costs.building
+
+relationship AutoDetected_510632b4-ec6a-407e-9324-b04b537e9062
+	isActive: false
+	fromColumn: technologies.country
+	toColumn: country_rankings.country
+
+relationship 20102050-a012-527f-29e8-f039c442b659
+	fromColumn: technologies.country
+	toColumn: countries.id
+
+relationship AutoDetected_e5013e84-0eb5-4324-9c3d-2223c2e851a5
+	fromColumn: buildings.state
+	toColumn: state_saturation.state
+

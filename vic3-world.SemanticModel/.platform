@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "vic3-world"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c4ddc58a-ca5e-4397-ae31-87b802982731"
+  }
+}

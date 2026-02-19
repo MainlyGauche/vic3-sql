@@ -1,0 +1,72 @@
+table building_ownership
+	lineageTag: f59266ac-a9ee-4da9-8296-e74094033841
+
+	measure cost = SUMX(building_ownership, building_ownership[levels] * RELATED(building_costs[cost]))
+		formatString: 0
+		lineageTag: ffc801de-c501-4d0e-ad3b-530186975e3f
+
+	measure gross = SUMX(building_ownership, building_ownership[levels] * RELATED(buildings[gross]) / RELATED(buildings[levels]))
+		lineageTag: def68c10-1a68-47ce-919e-369357280a89
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column levels
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b0af107-002e-4f18-b971-07e0e2f32064
+		summarizeBy: sum
+		sourceColumn: levels
+
+		annotation SummarizationSetBy = Automatic
+
+	column owned_building
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e93a49d-80df-4c92-a4d6-78ff755da7df
+		summarizeBy: none
+		sourceColumn: owned_building
+
+		annotation SummarizationSetBy = Automatic
+
+	column owning_country
+		dataType: int64
+		formatString: 0
+		lineageTag: dd7c151b-983f-4a01-adc3-3c2b0100476b
+		summarizeBy: sum
+		sourceColumn: owning_country
+
+		annotation SummarizationSetBy = Automatic
+
+	column owning_building
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d6e12c2-9b96-460e-ac9a-ed0d09dd608b
+		summarizeBy: sum
+		sourceColumn: owning_building
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownership_type
+		dataType: string
+		lineageTag: e06ac977-287d-485d-9c42-300f04641672
+		summarizeBy: none
+		sourceColumn: ownership_type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition building_ownership = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(Root & "\building_ownership.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"levels", Int64.Type}, {"owned_building", Int64.Type}, {"owning_country", Int64.Type}, {"owning_building", Int64.Type}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "ownership_type", each if not ([owning_country] = null)
+				 then "public" else if [owned_building] = [owning_building] then "workforce" else "private")
+				in
+				    #"Added Custom"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

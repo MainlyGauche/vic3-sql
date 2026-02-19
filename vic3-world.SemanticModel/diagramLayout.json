@@ -1,0 +1,165 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 486,
+            "y": 602.2314453125
+          },
+          "nodeIndex": "state_saturation",
+          "nodeLineageTag": "4d3af6c3-63a6-4158-9d87-13061b3ccd70",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 447,
+            "y": 311.2314453125
+          },
+          "nodeIndex": "states",
+          "nodeLineageTag": "3d68b751-2b6c-48d1-8eb1-104060697561",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 260.53555119383856
+          },
+          "nodeIndex": "countries",
+          "nodeLineageTag": "7c9549d5-23dc-455c-abe6-26feb21f6d1e",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 128,
+            "y": 494.1064453125
+          },
+          "nodeIndex": "country_rankings",
+          "nodeLineageTag": "0a0fafc8-99c3-4cca-9ce2-22fc8c2ff884",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 788,
+            "y": 348.0908203125
+          },
+          "nodeIndex": "pops",
+          "nodeLineageTag": "e7c4c740-493b-4a70-bba3-dfe55737ace4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 39.7470703125
+          },
+          "nodeIndex": "markets",
+          "nodeLineageTag": "08b2da15-2871-4895-a9e4-afd1340d61cb",
+          "size": {
+            "height": 145,
+            "width": 156
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 278,
+            "y": 0.1494140625
+          },
+          "nodeIndex": "market_investment_per_worker",
+          "nodeLineageTag": "6843af36-e892-4c91-936a-03bd26618d4a",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 888.17948483869043,
+            "y": 0
+          },
+          "nodeIndex": "buildings",
+          "nodeLineageTag": "b56ef7ac-0fa6-4c07-b489-81d1d37cf1ec",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 1244.9462730760131,
+            "y": 0
+          },
+          "nodeIndex": "building_ownership",
+          "nodeLineageTag": "f59266ac-a9ee-4da9-8296-e74094033841",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 573.44505356565685,
+            "y": 0
+          },
+          "nodeIndex": "building_costs",
+          "nodeLineageTag": "5bc8f493-1a82-432f-a18d-28a86e41419e",
+          "size": {
+            "height": 171.39743560483632,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 1080.1898677937959,
+            "y": 748.61510719537955
+          },
+          "nodeIndex": "technologies",
+          "nodeLineageTag": "6a27e977-1517-495c-a932-c08c1bc6dcec",
+          "size": {
+            "height": 145,
+            "width": 621.16238887093232
+          },
+          "zIndex": 11
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 79.553182037699813,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

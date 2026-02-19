@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "bb283b53b18c867642a9",
+  "displayName": "Building Ownership",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

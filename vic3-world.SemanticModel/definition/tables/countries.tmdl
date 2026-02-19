@@ -1,0 +1,52 @@
+table countries
+	lineageTag: 7c9549d5-23dc-455c-abe6-26feb21f6d1e
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 31c1b234-68c0-479b-a963-49f4ecb585db
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column definition
+		dataType: string
+		lineageTag: 545b3df8-3572-479c-b564-218935387f3b
+		summarizeBy: none
+		sourceColumn: definition
+
+		annotation SummarizationSetBy = Automatic
+
+	column capital
+		dataType: int64
+		formatString: 0
+		lineageTag: 331fefbc-21b7-4ce3-8463-bac67697bbf0
+		summarizeBy: sum
+		sourceColumn: capital
+
+		annotation SummarizationSetBy = Automatic
+
+	column market
+		dataType: int64
+		formatString: 0
+		lineageTag: 04c735ee-036f-478e-9685-b6fbf6a433eb
+		summarizeBy: none
+		sourceColumn: market
+
+		annotation SummarizationSetBy = Automatic
+
+	partition countries = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(Root & "\countries.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"id", Int64.Type}, {"definition", type text}, {"capital", Int64.Type}, {"market", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

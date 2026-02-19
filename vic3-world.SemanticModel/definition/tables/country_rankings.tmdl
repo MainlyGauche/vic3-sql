@@ -1,0 +1,60 @@
+table country_rankings
+	lineageTag: 0a0fafc8-99c3-4cca-9ce2-22fc8c2ff884
+
+	column country
+		dataType: int64
+		formatString: 0
+		lineageTag: 107db745-c15a-401e-89ad-7353e7453f73
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column rank
+		dataType: string
+		lineageTag: 59be4a9c-e9f4-4023-898f-b3b5811f6fb2
+		summarizeBy: none
+		sourceColumn: rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column target
+		dataType: string
+		lineageTag: aab37085-b3be-4c8c-9b97-9599d6a7cf60
+		summarizeBy: none
+		sourceColumn: target
+
+		annotation SummarizationSetBy = Automatic
+
+	column score
+		dataType: int64
+		formatString: 0
+		lineageTag: 2ee2d14a-8a02-4e57-94c5-f122ea7b04cc
+		summarizeBy: sum
+		sourceColumn: score
+
+		annotation SummarizationSetBy = Automatic
+
+	column prestige
+		dataType: int64
+		formatString: 0
+		lineageTag: 81659183-7cac-46de-8910-54baee2a5c9f
+		summarizeBy: sum
+		sourceColumn: prestige
+
+		annotation SummarizationSetBy = Automatic
+
+	partition country_rankings = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(Root & "\country_rankings.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"country", Int64.Type}, {"rank", type text}, {"target", type text}, {"score", Int64.Type}, {"prestige", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
