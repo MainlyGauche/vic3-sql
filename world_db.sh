@@ -34,33 +34,31 @@ rm -rf "$OUTPUT_DIR"
 
 TEMP_DIR=$(mktemp -d)
 trap 'rm -rf "$TEMP_DIR"' EXIT
+RAW_JSON="$TEMP_DIR/raw.json"
+MUNGED_JSON="$TEMP_DIR/munged.json"
 
 # Parse the save file into JSON
 echo "Parsing..."
-rakaly json --duplicate-keys group "$INPUT_SAVE" > "$TEMP_DIR/raw.json"
+rakaly json --duplicate-keys group "$INPUT_SAVE" > "$RAW_JSON"
 
 # Munge into flat tables
 echo "Munging..."
-jq -c -f "$SCRIPT_DIR/munge.jq" "$TEMP_DIR/raw.json" > "$TEMP_DIR/munged.json"
-
-# Extract each table's array to a newline-delimited JSON file
-TABLE_NAMES=$(jq -r 'keys_unsorted[]' "$TEMP_DIR/munged.json")
-
-for TABLE in $TABLE_NAMES; do
-    TABLE="${TABLE//$'\r'/}"
-    jq -c ".${TABLE}[]" "$TEMP_DIR/munged.json" > "$TEMP_DIR/$TABLE.json"
-done
+jq -c -f "$SCRIPT_DIR/munge.jq" "$RAW_JSON" > "$MUNGED_JSON"
 
 # Build a single DuckDB SQL script
-OUTPUT_WIN="$(cygpath -m "$OUTPUT_DIR")"
-TEMP_WIN="$(cygpath -m "$TEMP_DIR")"
-
 SQL=""
+TEMP_WINDIR="$(cygpath -m "$TEMP_DIR")"
+OUTPUT_WINDIR="$(cygpath -m "$OUTPUT_DIR")"
 
-for TABLE in $TABLE_NAMES; do
+for TABLE in $(jq -c -r 'keys_unsorted[]' "$MUNGED_JSON"); do
+		# Remove the carriage returns that jq sneaks in on Windows
     TABLE="${TABLE//$'\r'/}"
-    SQL+="create table \"$TABLE\" as select * from read_json_auto('${TEMP_WIN}/${TABLE}.json', format='newline_delimited');"$'\n'
-    SQL+="copy \"$TABLE\" to '${OUTPUT_WIN}/${TABLE}.csv' (header, delimiter ',');"$'\n'
+		# Tables need to come from disjoint files, so split the munged JSON into one file per table array
+		TABLE_LEAF="$TABLE.json"
+    jq -c ".${TABLE}" "$MUNGED_JSON" > "$TEMP_DIR/$TABLE_LEAF"
+
+    SQL+="create table \"$TABLE\" as select * from read_json('${TEMP_WINDIR}/${TABLE_LEAF}');"$'\n'
+    SQL+="copy \"$TABLE\" to '${OUTPUT_WINDIR}/${TABLE}.csv' (header, delimiter ',');"$'\n'
     SQL+="select '  ✓ Processed ' || count(*) || ' $TABLE' from \"$TABLE\";"$'\n'
 done
 
@@ -68,7 +66,7 @@ done
 for QUERY_FILE in "$QUERIES_DIR"/*.sql; do
 		QUERY_NAME=$(basename "$QUERY_FILE" .sql)
 		QUERY=$(cat "$QUERY_FILE")
-		SQL+="copy (${QUERY}) to '${OUTPUT_WIN}/${QUERY_NAME}.csv' (header, delimiter ',');"$'\n'
+		SQL+="copy (${QUERY}) to '${OUTPUT_WINDIR}/${QUERY_NAME}.csv' (header, delimiter ',');"$'\n'
 		SQL+="select '  ✓ Derived $QUERY_NAME';"$'\n'
 done
 
