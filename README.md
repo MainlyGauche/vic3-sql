@@ -1,23 +1,16 @@
 # vic3-sql
 
-Slurp textformat .v3 saves into SQLite.
+Slurp textformat .v3 saves into queryable CSVs via DuckDB.
 
 ## Usage
 
-Ensure `~\Documents\Paradox Interactive\Victoria 3` has
-
-```json
-game": {
-  "save_file_format":	"text"
-}
-```
-
-Afterwards, save your game, say to `save.v3`, then from Bash,
+From Bash,
 
 ```bash
-world_db.sh save.v3 world.sqlite
-sqlite3 world.sqlite
+world_db.sh save.v3 out/
 ```
+
+This produces a directory of CSVs — one for each interesting top-level `database` in the save, plus some derived datasets generated from `queries/`.
 
 ## Dependencies
 
@@ -27,8 +20,7 @@ On Windows, get the other dependencies with
 
 ```bash
 winget install jq
-winget install miller.miller
-winget install sqlite.sqlite
+winget install DuckDB.cli
 ```
 
 ## Pipeline
@@ -36,5 +28,4 @@ winget install sqlite.sqlite
 1. **save.v3**: PDX textformat
 2. **Rakaly**: PDX → JSON
 3. **jq**: Flattens and filters game databases
-4. **Miller (mlr)**: JSON → CSV
-5. **SQLite**: CSV → sqlite
+4. **DuckDB**: JSON → CSV (base tables + query results)
