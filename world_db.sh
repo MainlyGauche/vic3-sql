@@ -6,17 +6,19 @@
 
 set -e
 
-if [ $# -lt 2 ]; then
-	echo "Usage: $0 <input.v3> <output_dir>" >&2
-	echo "  input.v3: Vic3 save file" >&2
+if [ $# -lt 3 ]; then
+	echo "Usage: $0 <game> <input.v3> <output_dir>" >&2
+	echo "  game: Game subdirectory (e.g. vic3)" >&2
+	echo "  input.v3: Save file" >&2
 	echo "  output_dir: Output directory for CSV files" >&2
 	exit 1
 fi
 
-INPUT_SAVE="$1"
-OUTPUT_DIR="$2"
+GAME="$1"
+INPUT_SAVE="$2"
+OUTPUT_DIR="$3"
 SCRIPT_DIR="$(dirname "$0")"
-QUERIES_DIR="$SCRIPT_DIR/queries"
+QUERIES_DIR="$SCRIPT_DIR/$GAME/queries"
 
 if [ ! -f "$INPUT_SAVE" ]; then
 	echo "Error: Input file '$INPUT_SAVE' not found" >&2
@@ -43,7 +45,7 @@ rakaly json --duplicate-keys group "$INPUT_SAVE" > "$RAW_JSON"
 
 # Munge into flat tables
 echo "Munging..."
-jq -c -f "$SCRIPT_DIR/munge.jq" "$RAW_JSON" > "$MUNGED_JSON"
+jq -c -f "$SCRIPT_DIR/$GAME/munge.jq" "$RAW_JSON" > "$MUNGED_JSON"
 
 # Build a single DuckDB SQL script
 SQL=""

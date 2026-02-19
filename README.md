@@ -1,22 +1,22 @@
-# vic3-sql
+# pdx-powerbi
 
-Slurp .v3 saves into friendly CSVs and analyze them with PowerBI.
+Slurp PDX -- currently just v3 -- saves into friendly CSVs and analyze them with PowerBI.
 
 ## Usage
 
 If your save is `save.v3`, then from Bash,
 
 ```bash
-world_db.sh save.v3 $USERPROFILE/vic3-world
+world_db.sh vic3 save.v3 $USERPROFILE/world
 ```
 
-This produces a directory of CSVs — one for each interesting top-level `database` in the save, plus some derived datasets generated from `queries/`.
+This produces a directory of CSVs at that final argument — one for each interesting top-level `database` in the save, plus some derived datasets generated from `queries/`.
 
 Then, 
 
-1. Open `vic3-world.pbip`
+1. Open `vic3/world.pbip`
 2. Click Home > Transform data > Edit parameters 
-3. Edit the Root parameter to whatever `$USERPROFILE/vic3-world` expanded to on your machine, e.g. `C:\Users\middle-aged-autist\vic3-world`
+3. Edit the Root parameter to whatever `$USERPROFILE/world` expanded to on your machine, e.g. `C:\Users\middle-aged-autist\world`
 4. Refresh at least the data. The button's right next to Transform data.
 5. Bask in charts like the industrious businessfellow you are
 
