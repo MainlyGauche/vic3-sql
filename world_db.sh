@@ -23,12 +23,14 @@ if [ ! -f "$INPUT_SAVE" ]; then
     exit 1
 fi
 
-for cmd in json jq duckdb; do
+for cmd in rakaly jq duckdb; do
     if ! command -v $cmd &> /dev/null; then
         echo "Error: $cmd is not installed" >&2
         exit 1
     fi
 done
+
+rm -rf "$OUTPUT_DIR"
 
 TEMP_DIR=$(mktemp -d)
 trap 'rm -rf "$TEMP_DIR"' EXIT
@@ -40,9 +42,6 @@ rakaly json --duplicate-keys group "$INPUT_SAVE" > "$TEMP_DIR/raw.json"
 # Munge into flat tables
 echo "Munging..."
 jq -c -f "$SCRIPT_DIR/munge.jq" "$TEMP_DIR/raw.json" > "$TEMP_DIR/munged.json"
-
-rm -rf "$OUTPUT_DIR"
-mkdir -p "$OUTPUT_DIR"
 
 # Extract each table's array to a newline-delimited JSON file
 TABLE_NAMES=$(jq -r 'keys_unsorted[]' "$TEMP_DIR/munged.json")
@@ -73,4 +72,5 @@ for QUERY_FILE in "$QUERIES_DIR"/*.sql; do
 		SQL+="select '  ✓ Derived $QUERY_NAME';"$'\n'
 done
 
+mkdir -p "$OUTPUT_DIR"
 duckdb -noheader -list :memory: "$SQL"
